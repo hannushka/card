@@ -1,20 +1,33 @@
+import ReactCardFlip from 'react-card-flip';
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFlipped: false
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
+ 
+  handleClick(e) {
+    e.preventDefault();
+    this.setState({ isFlipped: !this.state.isFlipped });
+  }
+ 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <ReactCardFlip isFlipped={this.state.isFlipped}>
+        <div className="card" key="front" onClick={this.handleClick}>
+          <p>This is the front of the card.</p>
+        </div>
+ 
+        <div className="card" key="back" onClick={this.handleClick}>
+          <p>This is the back of the card.</p>
+        </div>
+      </ReactCardFlip>
+    )
   }
 }
 
