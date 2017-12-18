@@ -1,6 +1,17 @@
 body {   
   font-family: Helvetica, san-serif;
 }
+
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.image {
+  width: 100%;
+}
+
 .card {
     background-color: #fff;
     bottom: 0;
@@ -13,6 +24,6 @@ body {
     right: 0;
     top: 0;
     margin-top: 10vh;
-    width: 80vw;
+    width: 30vw;
     height: 80vh;
 }
