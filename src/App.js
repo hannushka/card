@@ -1,35 +1,18 @@
 import ReactCardFlip from 'react-card-flip';
 import React, { Component } from 'react';
-import './App.css';
-
-import img1 from './stuga/1.png';
-import img2 from './stuga/2.png';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Card from './Card';
+import Login from './Login';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFlipped: false
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
- 
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({ isFlipped: !this.state.isFlipped });
-  }
- 
   render() {
     return (
-      <ReactCardFlip isFlipped={this.state.isFlipped}>
-        <div className="card" key="front" onClick={this.handleClick}>
-          <div class="image"><img src={img1} alt="" /></div>
-        </div>
- 
-        <div className="card" key="back" onClick={this.handleClick}>
-          <div class="image"><img src={img2} alt="" /></div>
-        </div>
-      </ReactCardFlip>
+      <div>
+        <Switch>
+          <Route exact path='/' component={Card}/>
+          <Route path='/login' component={Login}/>
+        </Switch>
+      </div>
     )
   }
 }
