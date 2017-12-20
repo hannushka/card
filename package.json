@@ -1,17 +1,14 @@
 {
-  "name": "christmas-card-2017",
-  "version": "0.1.0",
-  "private": true,
+  "name": "rando",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "dependencies": {
-    "react": "^16.2.0",
-    "react-card-flip": "^0.1.1",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "express": "^4.16.2",
+    "password-generator": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "node index.js",
+    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
   }
 }
