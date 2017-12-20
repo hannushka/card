@@ -2,7 +2,8 @@
   "name": "card",
   "version": "1.0.0",
   "engines": {
-    "node": "6.11.1"
+    "node": "v6.11.1",
+    "npm": "3.10.10"
   },
   "main": "index.js",
   "license": "MIT",
@@ -12,6 +13,6 @@
   },
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
+    "heroku-postbuild": "cd client && npm run build && cd .."
   }
 }
