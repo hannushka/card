@@ -1,8 +1,76 @@
-import ReactCardFlip from 'react-card-flip';
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Card from './Card';
-import Login from './Login';
+import axios from 'axios';
+
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    setTimeout(cb, 100)
+  }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === true
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirect: false
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.login = this.login.bind(this);
+  }
+
+  login = (response) => {
+    console.log(response);
+    if (response.data.success) {
+      sessionStorage.token = response.data.token;
+      fakeAuth.authenticate(() => {
+        this.setState(() => ({
+          redirect: true
+        }))
+      })
+    }
+  }
+ 
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.password.value);
+    axios.post('/api/authenticate', {
+      password: e.target.password.value
+    })
+    .then(this.login)
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  render() {
+    const { redirect } = this.state
+    return (
+      <div className="Login">
+        <form onSubmit={this.handleSubmit}>
+          <input type="password" name="password" />
+          <input type="submit" value="Submit" />
+        </form>
+        {redirect && (
+          <Redirect to={'/card'}/>
+        )}
+      </div>
+    );
+  }
+}
 
 class App extends React.Component {
   render() {
@@ -10,7 +78,7 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route exact path='/' component={Login}/>
-          <Route path='/card' component={Card}/>
+          <PrivateRoute auth={false} path='/card' component={Card}/>
         </Switch>
       </div>
     )

@@ -23,11 +23,11 @@ class Card extends React.Component {
     return (
       <ReactCardFlip isFlipped={this.state.isFlipped}>
         <div className="card" key="front" onClick={this.handleClick}>
-          <div class="image"><img src={img1} alt="" /></div>
+          <div className="image"><img src={img1} alt="" /></div>
         </div>
   
         <div className="card" key="back" onClick={this.handleClick}>
-          <div class="image"><img src={img2} alt="" /></div>
+          <div className="image"><img src={img2} alt="" /></div>
         </div>
       </ReactCardFlip>
     )
