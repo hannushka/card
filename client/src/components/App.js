@@ -29,19 +29,6 @@ class Login extends React.Component {
       redirect: false
     }
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.login = this.login.bind(this);
-  }
-
-  login = (response) => {
-    console.log(response);
-    if (response.data.success) {
-      sessionStorage.token = response.data.token;
-      fakeAuth.authenticate(() => {
-        this.setState(() => ({
-          redirect: true
-        }))
-      })
-    }
   }
  
   handleSubmit(e) {
@@ -50,7 +37,16 @@ class Login extends React.Component {
     axios.post('/api/authenticate', {
       password: e.target.password.value
     })
-    .then(this.login)
+    .then((response) => {
+      console.log(response);
+      if (response.data.success) {
+        fakeAuth.authenticate(() => {
+          this.setState(() => ({
+            redirect: true
+          }))
+        })
+      }
+    })
     .catch(function (error) {
       console.log(error);
     });

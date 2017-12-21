@@ -1,9 +1,8 @@
 import ReactCardFlip from 'react-card-flip';
 import React from 'react';
-import './App.css';
 
-import img1 from './stuga/1.png';
-import img2 from './stuga/2.png';
+import img1 from '../assets/1.png';
+import img2 from '../assets/2.png';
 
 class Card extends React.Component {
   constructor(props) {
