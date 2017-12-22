@@ -2,15 +2,17 @@ import * as types from './actionTypes';
 import axios from 'axios';
 
 export function receiveToken(data) {
-  let token = data.success ? data.token : data.message;
   console.log('Received data', data);
+  if (data.success) {
+    sessionStorage.setItem('token', data.token);
+  }
   return {type: types.RECEIVE_TOKEN, isLoggedIn: data.success};
 }
 
-export function fetchToken() {
+export function fetchToken(password) {
   return dispatch => {
     return axios.post('/api/authenticate', {
-      password: 'selma'
+      password: password
     })
     .then(response => dispatch(receiveToken(response.data)));
   };

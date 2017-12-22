@@ -4,18 +4,26 @@ import * as actions from './../actions/actions';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-class Auth extends React.Component {  
-
-  componentWillMount() {
-    this.props.actions.fetchToken();
+class Auth extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+ 
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.actions.fetchToken(e.target.password.value);    
   }
 
-
   render() {
-    console.log(this.props.isLoggedIn);
     return (
-      <div className="">
-       {this.props.isLoggedIn ? "true" : "false"}
+      <div className="Auth">
+        <form onSubmit={this.handleSubmit}>
+          <input type="password" name="password" />
+          <input type="submit" value="Submit" />
+        </form>
+        {this.props.isLoggedIn && "hej"}
       </div>
     );
   }
