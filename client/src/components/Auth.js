@@ -7,24 +7,15 @@ import React from 'react';
 class Auth extends React.Component {  
 
   componentWillMount() {
-    this.props.actions.fetchStuff();
+    this.props.actions.fetchToken();
   }
 
-  renderData() {
-    return <div>{this.props.stuffs}</div>;
-  }
-  
+
   render() {
-    console.log(this.props)
+    console.log(this.props.isLoggedIn);
     return (
       <div className="">
-          {this.props.stuffs.length > 0 ?
-            this.renderData()
-            :
-            <div className="">
-              No Data
-            </div>
-          }
+       {this.props.isLoggedIn ? "true" : "false"}
       </div>
     );
   }
@@ -32,12 +23,12 @@ class Auth extends React.Component {
 
 Auth.propTypes = {
   actions: PropTypes.object,
-  stuffs: PropTypes.string
+  isLoggedIn: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
-    stuffs: state.stuff
+    isLoggedIn: state.isLoggedIn
   };
 }
 
