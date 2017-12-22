@@ -1,6 +1,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actions from './../actions/actions';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,7 +24,8 @@ class Auth extends React.Component {
           <input type="password" name="password" />
           <input type="submit" value="Submit" />
         </form>
-        {this.props.isLoggedIn && "hej"}
+        {this.props.isLoggedIn && 
+                <Redirect to={'/'}/>}
       </div>
     );
   }

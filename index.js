@@ -10,8 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var apiRoutes = express.Router(); 
-app.use('/api', apiRoutes);
-app.use('/card', apiRoutes);
+// app.use('/card', apiRoutes);
 app.set('superSecret', 'selma');
 
 // Serve static files from the React app
@@ -34,6 +33,8 @@ apiRoutes.post('/authenticate', function(req, res) {
   });
 
 apiRoutes.use(function(req, res, next) {
+    console.log(req.body);
+    console.log(req.query);
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
       jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
@@ -41,6 +42,7 @@ apiRoutes.use(function(req, res, next) {
           return res.json({ success: false, message: 'Failed to authenticate token.' });    
         } else {
           req.decoded = decoded;    
+          console.log("decoded");
           next();
         }
       });
@@ -52,6 +54,12 @@ apiRoutes.use(function(req, res, next) {
   
     }
   });
+
+apiRoutes.get('/card', function(req, res) {
+  return res.json({ success: true, message: 'Card access granted!' }); 
+}); 
+
+app.use('/api', apiRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port);
