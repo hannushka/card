@@ -18,7 +18,6 @@ class App extends React.Component {
     return (
       <div className="app">
         <Switch>
-          <Route path='/login' component={Auth}/>
           <Route exact path="/" render={() => (
               this.props.isLoggedIn ? (
                 <Card />

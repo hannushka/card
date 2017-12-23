@@ -4,6 +4,8 @@ import * as actions from './../actions/actions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { FormGroup, FormControl, Button } from 'react-bootstrap';
 
 class Auth extends React.Component {
   
@@ -12,17 +14,21 @@ class Auth extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
  
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.actions.fetchToken(e.target.password.value);    
+  handleSubmit() {
+    this.props.actions.fetchToken(ReactDOM.findDOMNode(this.refs.password).value);    
   }
 
   render() {
     return (
-      <div className="Auth">
+      <div className="auth">
+        <h3>Skriv in svaret på gåtan</h3>
         <form onSubmit={this.handleSubmit}>
-          <input type="password" name="password" />
-          <input type="submit" value="Submit" />
+          <FormGroup bsSize="large">
+            <FormControl type="password" ref="password"  />
+          </FormGroup>
+          <Button bsStyle="success" bsSize="large" onClick={this.handleSubmit}>
+            Skicka in
+          </Button>
         </form>
         {this.props.isLoggedIn && 
                 <Redirect to={'/'}/>}
