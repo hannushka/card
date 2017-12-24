@@ -11,11 +11,21 @@ class Auth extends React.Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      formStatus: null
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
  
-  handleSubmit() {
-    this.props.actions.fetchToken(ReactDOM.findDOMNode(this.refs.password).value);    
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.actions.fetchToken(ReactDOM.findDOMNode(this.refs.password).value)
+    .then((res) => {
+      if (!res.isLoggedIn) {
+        this.setState({formStatus: 'error'});
+        ReactDOM.findDOMNode(this.refs.password).value = '';
+      }
+    })
   }
 
   render() {
@@ -23,7 +33,7 @@ class Auth extends React.Component {
       <div className="auth">
         <h3>Skriv in svaret på gåtan</h3>
         <form onSubmit={this.handleSubmit}>
-          <FormGroup bsSize="large">
+          <FormGroup bsSize="large" validationState={this.state.formStatus}>
             <FormControl type="password" ref="password"  />
           </FormGroup>
           <Button bsStyle="success" bsSize="large" onClick={this.handleSubmit}>
