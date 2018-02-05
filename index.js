@@ -11,14 +11,14 @@ app.use(bodyParser.json());
 
 var apiRoutes = express.Router(); 
 // app.use('/card', apiRoutes);
-app.set('superSecret', 'selma');
+app.set('superSecret', '9mmnJoZquWVcXxdBGQg6U6s9MdRX5mD6');
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
 apiRoutes.post('/authenticate', function(req, res) {
-    if ('selma' != req.body.password) {
+    if ('password' != req.body.password) {
       res.json({ success: false, message: 'Authentication failed. Wrong password.' });
     } else {
       var token = jwt.sign({}, app.get('superSecret'), {
